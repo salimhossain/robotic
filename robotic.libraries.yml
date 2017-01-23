@@ -1,0 +1,28 @@
+global-styling:
+  css:
+    theme:
+      //maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css: {type: external, minified: true}
+      # included bootstrap and fontawesome
+      inc/css/bootstrap.min.css: {}
+      inc/css/bootstrap-theme.min.css: {}
+      inc/css/overrides.min.css: {}
+      css/style.css: {}
+      #css/print.css: { media: print }
+
+  js:
+    
+    inc/js/bootstrap.min.js: {}
+    js/smooth-scroll.js: {}
+    js/custom.js: {}
+    
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
+
+map:
+  js:   
+    https://maps.googleapis.com/maps/api/js?key=AIzaSyBkN7HTf1-Y3Uqo4tfdVVEQD2QUQjKYYqg&callback=init: { type: external, attributes: { defer: true, async: true, data-test: map-link }}
+    js/maps.js: { attributes: { defer: true, async: true, data-test: map-link }}

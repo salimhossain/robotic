@@ -1,0 +1,40 @@
+core: 8.x
+type: theme
+base theme: false
+
+name: 'Robotic'
+description: 'Uses the jsDelivr CDN for all CSS and JavaScript. No source files or compiling is necessary and is recommended for simple sites or beginners.'
+package: 'Bootstrap'
+
+regions:
+  navigation: 'Secondary Navigation'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  header: 'Header'
+  slider: 'Home Slider'
+  highlighted: 'Highlighted'
+  help: 'Featured top'
+  content: 'Content'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  
+  breadcrumb: Breadcrumb
+  sidebar_first: 'Primary Sidebar'
+  sidebar_second: 'Secondary Sidebar'
+  
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+
+  featured_bottom_first: 'Featured bottom first'
+  featured_bottom_second: 'Featured bottom second'
+  featured_bottom_third: 'Featured bottom third'
+  
+  footer_first: 'Footer First'
+  footer_second: 'Footer Second'
+  footer_third: 'Footer Third'
+  footer_fourth: 'Footer Fourth'
+  footer: 'Footer fifth'
+
+
+libraries:
+  - 'robotic/global-styling'
+  - robotic/map

@@ -1,0 +1,72 @@
+# Default settings should not be located here. This file is only used to
+# override existing settings. If your theme is the one that introduces a new
+# theme setting, it should use the Drupal Bootstrap base theme's
+# @BootstrapSetting annotation discovery process. This ensures that sub-theme
+# settings are inherited from base themes themes properly and to determine when
+# a setting should be saved to config as "overridden".
+#
+# @see \Drupal\bootstrap\Plugin\SettingBase
+# @see \Drupal\bootstrap\Plugin\SettingInterface
+# @see \Drupal\bootstrap\Plugin\SettingManager
+# @see \Drupal\bootstrap\Plugin\Form\SystemThemeSettings
+# @see \Drupal\bootstrap\ThemeSettings
+
+# default settings
+features:
+   comment_user_picture: true
+   comment_user_verification: true
+   favicon: true
+   logo: true
+   name: true
+   node_user_picture: true
+   slogan: true
+
+social_class_1: 'fa-facebook'
+social_links_1: 'https://www.facebook.com/syedsalimhossain'
+
+social_class_2: 'fa-twitter'
+social_links_2: 'https://twitter.com/robotic'
+
+social_class_3: 'fa-google-plus'
+social_links_3: 'https://plus.google.com/+robotic'
+
+social_class_4: 'fa-linkedin'
+social_links_4: 'http://www.linkedin.com/company/robotic'
+
+social_class_5: 'fa-pinterest'
+social_links_5: 'https://www.pinterest.com/robotic/'
+
+rss_url: 'rss.xml'
+
+# Toggle Social Media, Credit Link and Slideshow
+
+show_credit_link: 1
+
+# by SSH
+is_slideshow: 1
+slide_number: 3
+socialicon: 1
+
+
+#Slider Default Images & Description
+slide_title_1: 'Lorem Ipsum is simply dummy text 1'
+slide_description_1: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since' 
+slide_url_1: '/'
+slide_image_path_1: '/images/slider/slide-1.png'
+slide_bg_path_1: '/images/slider/slide-1-bg.png'
+
+
+slide_title_2: 'Lorem Ipsum is simply dummy text 2'
+slide_description_2: 'long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution' 
+slide_url_2: '/'
+slide_image_path_2: '/images/slider/slide-2.png'
+slide_bg_path_2: '/images/slider/slide-2-bg.png'
+
+
+slide_title_3: 'Lorem Ipsum is simply dummy text 3'
+slide_description_3: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since' 
+slide_url_3: '/'
+slide_image_path_3: '/images/slider/slide-3.png'
+slide_bg_path_3: '/images/slider/slide-3-bg.png'
+
+
