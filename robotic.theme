@@ -59,12 +59,7 @@ function robotic_preprocess_html(&$variables) {
 
 }
 
-$slideCount = 3;
-if (!empty(theme_get_setting('slide_number'))) {
-  $slideCount = is_numeric( theme_get_setting('slide_number'));
-}
 
-define('SLIDESHOW_COUNT', 3);
 define('SOCIAL_ICON_COUNT', 8);
 
 /**
@@ -91,13 +86,6 @@ function robotic_preprocess_page(&$variables) {
  * Implements hook_form_FORM_ID_alter().
  */
 function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-
-
-/*  echo "<pre>";
-  print_r($form);
-  echo "</pre>";*/
-  
-
 
   $form['robotic'] = array(
     '#type' => 'vertical_tabs',
@@ -172,20 +160,20 @@ function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\Form
   $form['robotic_slideshow']['is_slideshow'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show Slideshow'),
-    '#default_value' => theme_get_setting('is_slideshow'),
+    '#default_value' => theme_get_setting('is_slideshow', 'robotic'),
     '#description'   => t("Check this option to show Slideshow in front page. Uncheck to hide."),
   );
   $form['robotic_slideshow']['slide_number'] = array(
     '#type' => 'number',
     '#title' => t('Number of Slideshow'),
-    '#default_value' => theme_get_setting('slide_number'),
-    '#description'   => t("How many Slideshow you want."),
+    '#default_value' => theme_get_setting('slide_number', 'robotic'),
+    '#description'   => t("How many Slideshow you want...?"),
   );
   $form['robotic_slideshow']['slide'] = array(
     '#markup' => t('You can change the description and URL and image of each slide in the following Slide Setting fieldsets.'),
   );
 
-  for ($i = 1; $i <= SLIDESHOW_COUNT; $i++) {
+  for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
     $form['robotic_slideshow']['slide' . $i] = array(
       '#type' => 'details',
       '#title' => t('Slide '.$i),
@@ -267,32 +255,11 @@ function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\Form
  $form['help']['info'] = array(
     '#type' => 'fieldset',
     '#title' => t('<a href="http://www.roboticwave.com/" target="_blank">Robotic Wave, Inc.</a>'),
-    '#description'   => t('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam totam quos, ea delectus in mollitia. Est doloremque quo corporis, voluptas excepturi cumque iure incidunt consequuntur. Consequatur, ipsum. Consectetur, tempora, repellat? ') ,
+    '#description'   => t('If i can be of assistance, please do not hesitate to <a href="http://www.roboticwave.com/contact" target="_blank">contact us.</a> ') ,
   );
   
 // Custom submit to save the file permenant.
   $form['#submit'][] = 'robotic_settings_form_submit';
-
- // Provide the necessary default groups.
- /*   $form['bootstrap'] = [
-      '#type' => 'vertical_tabs',
-      //'#attached' => ['library' => ['bootstrap/theme-settings']],
-      '#prefix' => '<h2><small>' . t('Bootstrap Settings') . '</small></h2>',
-      '#weight' => 10,
-    ];
-    $groups = [
-      'general' => t('General'),
-      'components' => t('Components'),
-      'javascript' => t('JavaScript'),
-      'advanced' => t('Advanced'),
-    ];
-    foreach ($groups as $group => $title) {
-      $form[$group] = [
-        '#type' => 'details',
-        '#title' => $title,
-        '#group' => 'bootstrap',
-      ];
-    }*/
 
 }
 
@@ -332,7 +299,7 @@ function robotic_settings_form_submit(&$form, \Drupal\Core\Form\FormStateInterfa
  */
 function robotic_get_slider_content() {
   $slider_content = array();
-  for ($i = 1; $i <= SLIDESHOW_COUNT; $i++) {
+  for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
     $fid = theme_get_setting('slide_image_path'.$i,'robotic');
     $activeSlide = '';
     if ($i == 1) {
@@ -391,7 +358,7 @@ function robotic_get_slider_content() {
 // slider indicator
 function robotic_get_slider_indicator() {
   $slider_indicator = array();
-  for ($i = 1; $i <= SLIDESHOW_COUNT; $i++) {
+  for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
     $active = '';
     if ($i == 1) {
       $active = 'active';
