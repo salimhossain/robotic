@@ -279,26 +279,7 @@
   {% endif %}
 </footer>
 
-<style>
-  body {
-      background-color: {{ robotic_colors.body_bg is defined ? robotic_colors.body_bg : '#ffffff' }};
-  }
-  header#navbar{
-    background-color: {{ robotic_colors.header_bg }} ;
-  }
-  .social-section .social-links i.fa,
-  #navbar .nav>li>a {
-    color: {{ robotic_colors.header_font }} ;
-  }
-  
-  #navbar .nav>li>a:hover{
-    color: {{ robotic_colors.header_font }} !important;
-    opacity: 0.7;
-  }
-  .social-section .social-links i.fa,
-  .btn-btt{
-    background-color: {{ robotic_colors.header_bg }} ;
-    color: {{ robotic_colors.header_font }} ;
-  }
-</style>
+{% include directory ~ '/templates/style.html.twig' %}
+
+
 

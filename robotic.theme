@@ -186,7 +186,15 @@ function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\Form
       '#type' => 'textfield',
       '#title' => t('Slide ' . $i . ' URL'),
       '#default_value' => theme_get_setting('slide_url_' . $i, 'robotic')
+    );    
+
+///sasfasfas
+    $form['robotic_slideshow']['slide' . $i]['slide_color_' . $i]         = array(
+      '#type' => 'color',
+      '#title' => t('Slide ' . $i . ' Background Color'),
+      '#default_value' => theme_get_setting('slide_color_' . $i, 'robotic')
     );
+
     $form['robotic_slideshow']['slide' . $i]['slide_bg_path_' . $i]     = array(
       '#type' => 'managed_file',
       '#title' => t('Slide ' . $i . ' Background Image'),
@@ -244,8 +252,8 @@ function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\Form
   
   $form['help']['info'] = array(
     '#type' => 'fieldset',
-    '#title' => t('<a href="http://www.roboticwave.com/" target="_blank">Robotic Wave, Inc.</a>'),
-    '#description' => t('If i can be of assistance, please do not hesitate to <a href="http://www.roboticwave.com/contact" target="_blank">contact us.</a> ')
+    '#title' => t('How may i help you?'),
+    '#description' => t('If i can be of assistance, please do not hesitate to <a href="mailto:salimhossain@gmail.com?Subject=General%20inquiry" target="_top">contact.</a> ')
   );
   
   // Custom submit to save the file permenant.
@@ -316,18 +324,17 @@ function robotic_get_slider_content()
       //$filebg = file_load($fidbg[0]);
       //$uribg = $filebg->getFileUri();
       if (!empty(\Drupal\file\Entity\File::load($fidbg[0]))) {
-        
         $filebg = \Drupal\file\Entity\File::load($fidbg[0])->getFileUri();
         $pathbg = file_create_url($filebg);
       }
       
     } else {
-      $pathbg = base_path() . drupal_get_path('theme', 'robotic') . theme_get_setting('slide_bg_path__' . $i, 'robotic');
+      $pathbg = base_path() . drupal_get_path('theme', 'robotic') . '/images/slider/slide-'. $i .'-bg.png';
     } //end if
     
     
     
-    $slider_content[$i] = '<div class="item ' . $activeSlide . '" data-id="' . $i . '"> 
+    $slider_content[$i] = '<div class="item ' . $activeSlide . '" data-id="' . $i . '" style="background:'. theme_get_setting('slide_color_' . $i, 'robotic') .'"> 
       <img class="slider-bg-img" src="' . $pathbg . '" alt="image01" />
       <div class="carousel-caption">
         <div class="container"><div class="col-md-6 text-left">
