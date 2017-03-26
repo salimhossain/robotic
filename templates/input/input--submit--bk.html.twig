@@ -1,0 +1,19 @@
+{% extends "input.html.twig" %}
+
+{% spaceless %}
+  {%
+    set classes = [
+      'btn ',
+      type == 'submit' ? 'js-form-submit',
+      icon and icon_position and not icon_only ? 'icon-' ~ icon_position,
+    ]
+  %}
+  {% block input %}
+ 
+      <button{{ attributes.addClass(classes, 'icon-only') }}>
+        <span class="sr-only">{{ label }}</span>
+        <span class="icon glyphicon glyphicon-search" aria-hidden="true"></span>
+      </button>
+
+  {% endblock %}
+{% endspaceless %}

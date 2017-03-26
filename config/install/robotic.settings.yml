@@ -47,26 +47,30 @@ is_slideshow: 1
 slide_number: 3
 socialicon: 1
 
+body_bg: '#FFFFFF'
+color_bg: '#f2f2f2'
+color_font: '#000000'
 
 #Slider Default Images & Description
 slide_title_1: 'Lorem Ipsum is simply dummy text 1'
 slide_description_1: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since' 
 slide_url_1: '/'
 slide_image_path_1: '/images/slider/slide-1.png'
-slide_bg_path_1: '/images/slider/slide-1-bg.png'
+#slide_bg_path_1: '/images/slider/slide-1-bg.png'
+slide_color_1: '#5FA924'
 
 
 slide_title_2: 'Lorem Ipsum is simply dummy text 2'
 slide_description_2: 'long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution' 
 slide_url_2: '/'
 slide_image_path_2: '/images/slider/slide-2.png'
-slide_bg_path_2: '/images/slider/slide-2-bg.png'
-
+#slide_bg_path_2: '/images/slider/slide-2-bg.png'
+slide_color_2: '#35A1DC'
 
 slide_title_3: 'Lorem Ipsum is simply dummy text 3'
 slide_description_3: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since' 
 slide_url_3: '/'
 slide_image_path_3: '/images/slider/slide-3.png'
-slide_bg_path_3: '/images/slider/slide-3-bg.png'
-
+#slide_bg_path_3: '/images/slider/slide-3-bg.png'
+slide_color_3: '#FFB300'
 

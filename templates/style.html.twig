@@ -2,14 +2,16 @@
   body {
       background-color: {{ robotic_colors.body_bg is defined ? robotic_colors.body_bg : '#ffffff' }};
   }
+  a.post-details,
   header#navbar{
     background-color: {{ robotic_colors.header_bg }} ;
   }
+  a.post-details,
   .social-section .social-links i.fa,
   #navbar .nav>li>a {
     color: {{ robotic_colors.header_font }} ;
   }
-  
+  a.post-details,
   #navbar .nav>li>a:hover{
     color: {{ robotic_colors.header_font }} !important;
     opacity: 0.7;

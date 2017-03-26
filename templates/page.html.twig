@@ -137,6 +137,65 @@
 {% endif %}
 
 
+
+    {# Home Content #}
+    {% if is_front %}
+
+      {% if page.home_feature %}
+        <div role="main" class="feature">
+          <div class="{{ container }} js-quickedit-main-content">
+            <div class="row">
+              <div class="col-sm-12 home-container" role="home-heading">
+              {{ page.home_feature }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if page.home_about %}
+        <div role="main" class="about">
+          <div class="{{ container }} js-quickedit-main-content">
+            <div class="row">
+              <div class="col-sm-12 home-container" role="home-heading">
+              {{ page.home_about }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if page.home_team %}
+        <div role="main" class="team partner">
+          <div class="{{ container }} js-quickedit-main-content">
+            <div class="row">
+              <div class="col-sm-12 home-container" role="home-heading">
+              {{ page.home_team }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if page.home_testimonial %}
+        <div role="main" class="testimonial">
+          <div class="{{ container }} js-quickedit-main-content">
+            <div class="row">
+              <div class="col-sm-12 home-container" role="home-heading">
+              {{ page.home_testimonial }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+    {% endif %}
+
+
+  
+
+
+
   <div role="main" class="main-container">
     <div class="{{ container }} js-quickedit-main-content">
       <div class="row">
@@ -149,7 +208,28 @@
             </div>
           {% endblock %}
         {% endif %}
+        
 
+        {# Content #}
+        
+        {% if not is_front %}
+          {# set content_classes = ['col-md-9'] #}
+          {%
+            set content_classes = [
+              page.sidebar_first and page.sidebar_second ? 'col-sm-6',
+              page.sidebar_first and page.sidebar_second is empty ? 'col-sm-9',
+              page.sidebar_second and page.sidebar_first is empty ? 'col-sm-9',
+              page.sidebar_first is empty and page.sidebar_second is empty ? 'col-sm-12'
+            ]
+          %}
+
+        {% else %}
+
+          {% set content_classes = ['col-md-12'] %}
+
+        {% endif %}
+
+        
         {# Sidebar First #}
         {% if page.sidebar_first %}
           {% block sidebar_first %}
@@ -159,22 +239,7 @@
           {% endblock %}
         {% endif %}
 
-        {# Content #}
-        {#
-          set content_classes = [
-            page.sidebar_first and page.sidebar_second ? 'col-sm-6',
-            page.sidebar_first and page.sidebar_second is empty ? 'col-sm-9',
-            page.sidebar_second and page.sidebar_first is empty ? 'col-sm-9',
-            page.sidebar_first is empty and page.sidebar_second is empty ? 'col-sm-12'
-          ]
-        #}
-        {% if not is_front %}
-          {% set content_classes = ['col-md-9'] %}
-        {% else %}
-          {% set content_classes = ['col-md-12'] %}
-        {% endif %}
 
-        
         <section{{ content_attributes.addClass(content_classes) }}>
 
           {# Highlighted #}

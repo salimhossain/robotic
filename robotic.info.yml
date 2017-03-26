@@ -17,6 +17,11 @@ regions:
   page_top: 'Page top'
   page_bottom: 'Page bottom'
   
+  home_feature: 'Home Feature'
+  home_about: 'Home About'
+  home_team: 'Home Partner/Team'
+  home_testimonial: 'Home Testimonial'
+  
   breadcrumb: Breadcrumb
   sidebar_first: 'Primary Sidebar'
   sidebar_second: 'Secondary Sidebar'
@@ -37,4 +42,4 @@ regions:
 
 libraries:
   - 'robotic/global-styling'
-  - 'robotic/map'
+ 

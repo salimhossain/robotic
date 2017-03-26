@@ -7,7 +7,7 @@ dependencies:
     - robotic
 id: robotic_breadcrumbs
 theme: robotic
-region: header
+region: -1
 weight: -100
 provider: null
 plugin: system_breadcrumb_block

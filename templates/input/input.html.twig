@@ -12,13 +12,12 @@
  * - prefix: Markup to display before the input element.
  * - suffix: Markup to display after the input element.
  * - type: The type of input.
- *
- * @ingroup templates
- *
- * @see \Drupal\bootstrap\Plugin\Preprocess\Input
- * @see template_preprocess_input()
- */
 #}
+{%
+  set classes = [
+    'form-control',
+  ]
+%}
 {% spaceless %}
   {% if input_group %}
     <div class="input-group">
@@ -29,7 +28,7 @@
   {% endif %}
 
   {% block input %}
-    <input{{ attributes }} />
+    <input{{ attributes.addClass(classes) }} />
   {% endblock %}
 
   {% if suffix %}
