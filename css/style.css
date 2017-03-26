@@ -1252,11 +1252,6 @@ h2.block-title{
 #tcb-testimonial-carousel .media-object {
   margin: auto;
 }
-@media screen and (max-width: 768px) {
-  #tcb-testimonial-carousel .media-object {
-    margin-bottom: 15px;
-  }
-}
 .main-container img,
 .about img,
 .testimonial img,
@@ -1267,6 +1262,10 @@ h2.block-title{
   -o-border-radius: 3px;
   border-radius: 3px;
 }
+@media screen and (max-width: 768px) {
+
+}
+
 
 
 
@@ -1285,5 +1284,11 @@ h2.block-title{
     text-align: center;
     width: 100%;
     float: left;
+  }
+    #tcb-testimonial-carousel .media-object {
+    margin-bottom: 15px;
+  }
+  #footer{
+    text-align: center;
   }
 }
