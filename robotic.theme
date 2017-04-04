@@ -6,44 +6,31 @@
  * Place your custom PHP code in this file.
  */
 
-use Drupal\Component\Utility\String;
-use Drupal\Component\Utility\Xss;
-use Drupal\Core\Template\Attribute;
-use Drupal\Core\Template\RenderWrapper;
-use Drupal\search\Form\SearchBlockForm;
-use Drupal\Component\Utility\SafeMarkup;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\system\Form\ThemeSettingsForm;
-use Drupal\file\Entity\File;
-use Drupal\Core\Url;
-use Drupal\file\Plugin\Core\Entity\FileInterface;
-use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Link;
-
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\file\Entity\File;
 
 /**
  * Implements hook_preprocess_HOOK() for block templates.
  */
 function robotic_preprocess_block(&$variables)
 {
-  switch ($variables['base_plugin_id']) {
-    case 'system_branding_block':
-      $variables['site_logo'] = '';
-      if ($variables['content']['site_logo']['#access'] && $variables['content']['site_logo']['#uri']) {
-        $variables['site_logo'] = str_replace('.svg', '.png', $variables['content']['site_logo']['#uri']);
-      }
-      break;
-      
-  }
-  switch ($variables['base_plugin_id']) {
-    case 'system_powered_by_block':
-    //echo "<pre>";
-    $variables['content']['#markup'] = 'Designed by <a href="http://www.roboticwave.com">Robotic Wave</a> & Powered by <a href="https://www.drupal.org">Drupal</a>';
-    
-    break;
-  }
+    switch ($variables['base_plugin_id']) {
+        case 'system_branding_block':
+            $variables['site_logo'] = '';
+            if ($variables['content']['site_logo']['#access'] && $variables['content']['site_logo']['#uri']) {
+                $variables['site_logo'] = str_replace('.svg', '.png', $variables['content']['site_logo']['#uri']);
+            }
+            break;
+    }
+    switch ($variables['base_plugin_id']) {
+        case 'system_powered_by_block':
+            //echo "<pre>";
+            $variables['content']['#markup'] = 'Designed by <a href="http://www.roboticwave.com">Robotic Wave</a> & Powered by <a href="https://www.drupal.org">Drupal</a>';
 
+            break;
+    }
 }
 
 /**
@@ -52,15 +39,15 @@ function robotic_preprocess_block(&$variables)
  */
 function robotic_preprocess_html(&$variables)
 {
-  $node = \Drupal::request()->attributes->get('node');
-  if (isset($node->id)) {
-    $variables['path_info']['args'] = 'node-' . $node->id();
-  }
-  
+    $node = \Drupal::request()->attributes->get('node');
+    if (isset($node->id)) {
+        $variables['path_info']['args'] = 'node-' . $node->id();
+    }
 }
 
-function robotic_system_powered_by() {
-  return '<span>' . t('SALIM Powered by <a href="@poweredby">Drupal</a>', array('@poweredby' => 'https://www.drupal.org')) . '</span>';
+function robotic_system_powered_by()
+{
+    return '<span>' . t('SALIM Powered by <a href="@poweredby">Drupal</a>', array('@poweredby' => 'https://www.drupal.org')) . '</span>';
 }
 
 define('SOCIAL_ICON_COUNT', 8);
@@ -70,46 +57,46 @@ define('SOCIAL_ICON_COUNT', 8);
  */
 function robotic_preprocess_page(&$variables)
 {
-  if ($variables['is_front']) {
-    if (theme_get_setting('is_slideshow', 'robotic') == 1) {
-      $variables['is_slideshow']   = 1;
-      $variables['slider_number']  = robotic_get_slider_indicator();
-      $variables['slider_content'] = robotic_get_slider_content();
+    if ($variables['is_front']) {
+        if (theme_get_setting('is_slideshow', 'robotic') == 1) {
+            $variables['is_slideshow']   = 1;
+            $variables['slider_number']  = robotic_get_slider_indicator();
+            $variables['slider_content'] = robotic_get_slider_content();
+        }
     }
-  }
-  $variables['social_links']                  = robotic_get_social_links();
-  $variables['robotic_colors']['body_bg']     = theme_get_setting('body_bg', 'robotic');
-  $variables['robotic_colors']['header_bg']   = theme_get_setting('color_bg', 'robotic');
-  $variables['robotic_colors']['header_font'] = theme_get_setting('color_font', 'robotic');
-  
-  // Robotic Class
-  /*if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
-    $content_class = 'col-md-6';
-    $sidebar_class = 'col-md-3';
-  }*/
+    $variables['social_links']                  = robotic_get_social_links();
+    $variables['robotic_colors']['body_bg']     = theme_get_setting('body_bg', 'robotic');
+    $variables['robotic_colors']['header_bg']   = theme_get_setting('color_bg', 'robotic');
+    $variables['robotic_colors']['header_font'] = theme_get_setting('color_font', 'robotic');
+
+    // Robotic Class
+    /*if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
+$content_class = 'col-md-6';
+$sidebar_class = 'col-md-3';
+}*/
 }
 
-function robotic_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) 
+function robotic_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
 {
-  if ($form_id == 'search_block_form') {
-    $form['#attributes']['class'][] = 'searchForm';
-    $form['keys']['#attributes']['placeholder'] = t('Search');
-    $form['actions']['submit']['#value'] = html_entity_decode('&#xf002;');
-    $form['actions']['submit']['#attributes']['class'][] = 'search-button fa';
+    if ($form_id == 'search_block_form') {
+        $form['#attributes']['class'][]                      = 'searchForm';
+        $form['keys']['#attributes']['placeholder']          = t('Search');
+        $form['actions']['submit']['#value']                 = html_entity_decode('&#xf002;');
+        $form['actions']['submit']['#attributes']['class'][] = 'search-button fa';
 
-    //echo '<pre>';
-    //print_r($form); echo '</pre>';
-  }
+        //echo '<pre>';
+        //print_r($form); echo '</pre>';
+    }
 }
 
-function robotic_preprocess_breadcrumb(&$variables) 
+function robotic_preprocess_breadcrumb(&$variables)
 {
-   if(($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb']){
-     $variables['breadcrumb'][] = array(
-       'text' => $node->getTitle(),
-       'url' => $node->URL()
-     );
-  }
+    if (($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb']) {
+        $variables['breadcrumb'][] = array(
+            'text' => $node->getTitle(),
+            'url'  => $node->URL(),
+        );
+    }
 }
 
 /**
@@ -117,187 +104,182 @@ function robotic_preprocess_breadcrumb(&$variables)
  */
 function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
 {
-  
-  $form['robotic'] = array(
-    '#type' => 'vertical_tabs',
-    '#default_tab' => 'edit-publication',
-    '#prefix' => '<h2>' . t('Robotic Theme Settings') . '</h2>',
-    '#weight' => 5
-  );
-  
-  $form['robotic_general'] = array(
-    '#type' => 'details',
-    '#title' => t('General'),
-    '#group' => 'robotic'
-  );
-  
-  
-  //Google Map API settings start 
-  $form['robotic_general']['gmapapi']                = array(
-    '#type' => 'fieldset',
-    '#title' => t('Google Map API'),
-    /*'#group' => 'robotic',*/
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE
-  );
-  $form['robotic_general']['gmapapi']['gmapapi_key'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Google map key'),
-    '#default_value' => theme_get_setting('gmapapi_key', 'robotic'),
-    '#description' => t("Put your google map api key here.")
-  );
-  
-  
-  // Body Color settings start 
-  $form['robotic_general']['color']            = array(
-    '#type' => 'fieldset',
-    '#title' => t('Background Color'),
-    /*'#group' => 'robotic_settings',*/
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE
-  );
-  $form['robotic_general']['color']['body_bg'] = array(
-    '#type' => 'color',
-    '#title' => t('Body Background Color'),
-    '#default_value' => theme_get_setting('body_bg', 'robotic')
-  );
-  
-  // Header Colors start 
-  $form['robotic_general']['color_header']               = array(
-    '#type' => 'fieldset',
-    '#title' => t('Header Background & Fonts Color')
-  );
-  $form['robotic_general']['color_header']['color_bg']   = array(
-    '#type' => 'color',
-    '#title' => t('Header Background Color'),
-    '#default_value' => theme_get_setting('color_bg', 'robotic')
-  );
-  $form['robotic_general']['color_header']['color_font'] = array(
-    '#type' => 'color',
-    '#title' => t('Header/Menu Fonts Color'),
-    '#default_value' => theme_get_setting('color_font', 'robotic')
-  );
-  
-  
-  // Sideshow start 
-  $form['robotic_slideshow']                 = array(
-    '#type' => 'details',
-    '#title' => t('Front Page Slideshow'),
-    '#group' => 'robotic',
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE
-  );
-  $form['robotic_slideshow']['is_slideshow'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Show Slideshow'),
-    '#default_value' => theme_get_setting('is_slideshow', 'robotic'),
-    '#description' => t("Check this option to show Slideshow in front page. Uncheck to hide.")
-  );
-  $form['robotic_slideshow']['slide_number'] = array(
-    '#type' => 'number',
-    '#title' => t('Number of Slideshow'),
-    '#default_value' => theme_get_setting('slide_number', 'robotic'),
-    '#description' => t("How many Slideshow you want...?")
-  );
-  $form['robotic_slideshow']['slide']        = array(
-    '#markup' => t('You can change the description and URL and image of each slide in the following Slide Setting fieldsets.')
-  );
-  
-  for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
-    $form['robotic_slideshow']['slide' . $i]                            = array(
-      '#type' => 'details',
-      '#title' => t('Slide ' . $i),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE
+
+    $form['robotic'] = array(
+        '#type'        => 'vertical_tabs',
+        '#default_tab' => 'edit-publication',
+        '#prefix'      => '<h2>' . t('Robotic Theme Settings') . '</h2>',
+        '#weight'      => 5,
     );
-    $form['robotic_slideshow']['slide' . $i]['slide_title_' . $i]       = array(
-      '#type' => 'textfield',
-      '#title' => t('Slide ' . $i . ' Title'),
-      '#default_value' => theme_get_setting('slide_title_' . $i, 'robotic')
-      //'#required' => 'required',
+
+    $form['robotic_general'] = array(
+        '#type'  => 'details',
+        '#title' => t('General'),
+        '#group' => 'robotic',
     );
-    $form['robotic_slideshow']['slide' . $i]['slide_description_' . $i] = array(
-      '#type' => 'textarea',
-      '#title' => t('Slide ' . $i . ' Description'),
-      '#default_value' => theme_get_setting('slide_description_' . $i, 'robotic')
+
+    //Google Map API settings start
+    $form['robotic_general']['gmapapi'] = array(
+        '#type'        => 'fieldset',
+        '#title'       => t('Google Map API'),
+        /*'#group' => 'robotic',*/
+        '#collapsible' => true,
+        '#collapsed'   => false,
     );
-    $form['robotic_slideshow']['slide' . $i]['slide_url_' . $i]         = array(
-      '#type' => 'textfield',
-      '#title' => t('Slide ' . $i . ' URL'),
-      '#default_value' => theme_get_setting('slide_url_' . $i, 'robotic')
-    );    
+    $form['robotic_general']['gmapapi']['gmapapi_key'] = array(
+        '#type'          => 'textfield',
+        '#title'         => t('Google map key'),
+        '#default_value' => theme_get_setting('gmapapi_key', 'robotic'),
+        '#description'   => t("Put your google map api key here."),
+    );
+
+    // Body Color settings start
+    $form['robotic_general']['color'] = array(
+        '#type'        => 'fieldset',
+        '#title'       => t('Background Color'),
+        /*'#group' => 'robotic_settings',*/
+        '#collapsible' => true,
+        '#collapsed'   => false,
+    );
+    $form['robotic_general']['color']['body_bg'] = array(
+        '#type'          => 'color',
+        '#title'         => t('Body Background Color'),
+        '#default_value' => theme_get_setting('body_bg', 'robotic'),
+    );
+
+    // Header Colors start
+    $form['robotic_general']['color_header'] = array(
+        '#type'  => 'fieldset',
+        '#title' => t('Header Background & Fonts Color'),
+    );
+    $form['robotic_general']['color_header']['color_bg'] = array(
+        '#type'          => 'color',
+        '#title'         => t('Header Background Color'),
+        '#default_value' => theme_get_setting('color_bg', 'robotic'),
+    );
+    $form['robotic_general']['color_header']['color_font'] = array(
+        '#type'          => 'color',
+        '#title'         => t('Header/Menu Fonts Color'),
+        '#default_value' => theme_get_setting('color_font', 'robotic'),
+    );
+
+    // Sideshow start
+    $form['robotic_slideshow'] = array(
+        '#type'        => 'details',
+        '#title'       => t('Front Page Slideshow'),
+        '#group'       => 'robotic',
+        '#collapsible' => true,
+        '#collapsed'   => false,
+    );
+    $form['robotic_slideshow']['is_slideshow'] = array(
+        '#type'          => 'checkbox',
+        '#title'         => t('Show Slideshow'),
+        '#default_value' => theme_get_setting('is_slideshow', 'robotic'),
+        '#description'   => t("Check this option to show Slideshow in front page. Uncheck to hide."),
+    );
+    $form['robotic_slideshow']['slide_number'] = array(
+        '#type'          => 'number',
+        '#title'         => t('Number of Slideshow'),
+        '#default_value' => theme_get_setting('slide_number', 'robotic'),
+        '#description'   => t("How many Slideshow you want...?"),
+    );
+    $form['robotic_slideshow']['slide'] = array(
+        '#markup' => t('You can change the description and URL and image of each slide in the following Slide Setting fieldsets.'),
+    );
+
+    for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
+        $form['robotic_slideshow']['slide' . $i] = array(
+            '#type'        => 'details',
+            '#title'       => t('Slide ' . $i),
+            '#collapsible' => true,
+            '#collapsed'   => true,
+        );
+        $form['robotic_slideshow']['slide' . $i]['slide_title_' . $i] = array(
+            '#type'          => 'textfield',
+            '#title'         => t('Slide ' . $i . ' Title'),
+            '#default_value' => theme_get_setting('slide_title_' . $i, 'robotic'),
+            //'#required' => 'required',
+        );
+        $form['robotic_slideshow']['slide' . $i]['slide_description_' . $i] = array(
+            '#type'          => 'textarea',
+            '#title'         => t('Slide ' . $i . ' Description'),
+            '#default_value' => theme_get_setting('slide_description_' . $i, 'robotic'),
+        );
+        $form['robotic_slideshow']['slide' . $i]['slide_url_' . $i] = array(
+            '#type'          => 'textfield',
+            '#title'         => t('Slide ' . $i . ' URL'),
+            '#default_value' => theme_get_setting('slide_url_' . $i, 'robotic'),
+        );
 
 ///sasfasfas
-    $form['robotic_slideshow']['slide' . $i]['slide_color_' . $i]         = array(
-      '#type' => 'color',
-      '#title' => t('Slide ' . $i . ' Background Color'),
-      '#default_value' => theme_get_setting('slide_color_' . $i, 'robotic')
+        $form['robotic_slideshow']['slide' . $i]['slide_color_' . $i] = array(
+            '#type'          => 'color',
+            '#title'         => t('Slide ' . $i . ' Background Color'),
+            '#default_value' => theme_get_setting('slide_color_' . $i, 'robotic'),
+        );
+
+        /*$form['robotic_slideshow']['slide' . $i]['slide_bg_path_' . $i]     = array(
+        '#type' => 'managed_file',
+        '#title' => t('Slide ' . $i . ' Background Image'),
+        '#default_value' => theme_get_setting('slide_bg_path_' . $i, 'robotic'),
+        '#upload_location' => 'public://'
+        );*/
+        $form['robotic_slideshow']['slide' . $i]['slide_image_path' . $i] = array(
+            '#type'            => 'managed_file',
+            '#title'           => t('Slide ' . $i . ' Image'),
+            '#default_value'   => theme_get_setting('slide_image_path' . $i, 'robotic'),
+            '#upload_location' => 'public://',
+        );
+    }
+
+    //Social Icons settings start
+    $form['robotic_socialicon'] = array(
+        '#type'        => 'details',
+        '#title'       => t('Social Icons Configuration'),
+        '#group'       => 'robotic',
+        '#collapsible' => true,
+        '#collapsed'   => true,
     );
 
-    /*$form['robotic_slideshow']['slide' . $i]['slide_bg_path_' . $i]     = array(
-      '#type' => 'managed_file',
-      '#title' => t('Slide ' . $i . ' Background Image'),
-      '#default_value' => theme_get_setting('slide_bg_path_' . $i, 'robotic'),
-      '#upload_location' => 'public://'
-    );*/
-    $form['robotic_slideshow']['slide' . $i]['slide_image_path' . $i]   = array(
-      '#type' => 'managed_file',
-      '#title' => t('Slide ' . $i . ' Image'),
-      '#default_value' => theme_get_setting('slide_image_path' . $i, 'robotic'),
-      '#upload_location' => 'public://'
+    for ($i = 1; $i <= SOCIAL_ICON_COUNT; $i++) {
+        $form['robotic_socialicon'][$i] = array(
+            '#type'        => 'details',
+            // '#type' => 'fieldset',
+            // '#tree' => TRUE,
+            '#title'       => t("Social icon - {$i}"),
+            '#collapsible' => true,
+            '#collapsed'   => false,
+        );
+
+        $form['robotic_socialicon'][$i]["social_class_{$i}"] = array(
+            '#type'          => 'textfield',
+            '#title'         => t('Class'),
+            '#description'   => t('Enter <a href="https://fortawesome.github.io/Font-Awesome/icons/#brand" target="_blank">font awesome social icon</a> class. for example "fa-facebook" for facebook'),
+            '#default_value' => theme_get_setting("social_class_{$i}"),
+        );
+        $form['robotic_socialicon'][$i]["social_links_{$i}"] = array(
+            '#type'          => 'textfield',
+            '#title'         => t('Url'),
+            '#description'   => t("Enter your's social sites profile link (url)."),
+            '#default_value' => theme_get_setting("social_links_{$i}"),
+        );
+    }
+
+    //help
+    $form['help'] = array(
+        '#type'  => 'details',
+        '#title' => t('Need help?'),
+        '#group' => 'robotic',
     );
-  }
-  
-  
-  //Social Icons settings start
-  $form['robotic_socialicon'] = array(
-    '#type' => 'details',
-    '#title' => t('Social Icons Configuration'),
-    '#group' => 'robotic',
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE
-  );
-  
-  for ($i = 1; $i <= SOCIAL_ICON_COUNT; $i++) {
-    $form['robotic_socialicon'][$i] = array(
-      '#type' => 'details',
-      // '#type' => 'fieldset',
-      // '#tree' => TRUE,
-      '#title' => t("Social icon - {$i}"),
-      '#collapsible' => TRUE,
-      '#collapsed' => FALSE
+
+    $form['help']['info'] = array(
+        '#type'        => 'fieldset',
+        '#title'       => t('How may i help you?'),
+        '#description' => t('If i can be of assistance, please do not hesitate to <a href="mailto:salimhossain@gmail.com?Subject=General%20inquiry" target="_top">contact.</a> '),
     );
-    
-    $form['robotic_socialicon'][$i]["social_class_{$i}"] = array(
-      '#type' => 'textfield',
-      '#title' => t('Class'),
-      '#description' => t('Enter <a href="https://fortawesome.github.io/Font-Awesome/icons/#brand" target="_blank">font awesome social icon</a> class. for example "fa-facebook" for facebook'),
-      '#default_value' => theme_get_setting("social_class_{$i}")
-    );
-    $form['robotic_socialicon'][$i]["social_links_{$i}"] = array(
-      '#type' => 'textfield',
-      '#title' => t('Url'),
-      '#description' => t("Enter your's social sites profile link (url)."),
-      '#default_value' => theme_get_setting("social_links_{$i}")
-    );
-  }
-  
-  //help
-  $form['help'] = array(
-    '#type' => 'details',
-    '#title' => t('Need help?'),
-    '#group' => 'robotic'
-  );
-  
-  $form['help']['info'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('How may i help you?'),
-    '#description' => t('If i can be of assistance, please do not hesitate to <a href="mailto:salimhossain@gmail.com?Subject=General%20inquiry" target="_top">contact.</a> ')
-  );
-  
-  // Custom submit to save the file permenant.
-  $form['#submit'][] = 'robotic_settings_form_submit';
-  
+
+    // Custom submit to save the file permenant.
+    $form['#submit'][] = 'robotic_settings_form_submit';
 }
 
 /**
@@ -305,80 +287,77 @@ function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\Form
  */
 function robotic_settings_form_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
 {
-  $account = \Drupal::currentUser();
-  $values  = $form_state->getValues();
-  for ($i = 0; $i < 6; $i++) {
-    if (isset($values['slide_image_path' . $i]) && !empty($values['slide_image_path' . $i])) {
-      // Load the file via file.fid.
-      $file = file_load($values['slide_image_path' . $i][0]);
-      // Change status to permanent.
-      $file->setPermanent();
-      $file->save();
-      $file_usage = \Drupal::service('file.usage');
-      $file_usage->add($file, 'user', 'user', $account->id());
-    }
-    //for gb image
-    /*if (isset($values['slide_bg_path_' . $i]) && !empty($values['slide_bg_path_' . $i])) {
-      // Load the file via file.fid.
-      $file = file_load($values['slide_bg_path_' . $i][0]);
-      // Change status to permanent.
-      $file->setPermanent();
-      $file->save();
-      $file_usage = \Drupal::service('file.usage');
-      $file_usage->add($file, 'user', 'user', $account->id());
+    $account = \Drupal::currentUser();
+    $values  = $form_state->getValues();
+    for ($i = 0; $i < 6; $i++) {
+        if (isset($values['slide_image_path' . $i]) && !empty($values['slide_image_path' . $i])) {
+            // Load the file via file.fid.
+            $file = file_load($values['slide_image_path' . $i][0]);
+            // Change status to permanent.
+            $file->setPermanent();
+            $file->save();
+            $file_usage = \Drupal::service('file.usage');
+            $file_usage->add($file, 'user', 'user', $account->id());
+        }
+        //for gb image
+        /*if (isset($values['slide_bg_path_' . $i]) && !empty($values['slide_bg_path_' . $i])) {
+    // Load the file via file.fid.
+    $file = file_load($values['slide_bg_path_' . $i][0]);
+    // Change status to permanent.
+    $file->setPermanent();
+    $file->save();
+    $file_usage = \Drupal::service('file.usage');
+    $file_usage->add($file, 'user', 'user', $account->id());
     }*/
-    
-  }
+    }
 }
-
 
 /**
  * slider content callback
  */
 function robotic_get_slider_content()
 {
-  $slider_content = array();
-  
-  for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
-    $fid         = theme_get_setting('slide_image_path' . $i, 'robotic');
-    $activeSlide = '';
-    if ($i == 1) {
-      $activeSlide = 'active';
-    }
-    
-    if (!empty($fid)) {
-      //$file = file_load($fid[0]);
-      //$uri = $file->getFileUri();
-      if (!empty(\Drupal\file\Entity\File::load($fid[0]))) {
-        $file = \Drupal\file\Entity\File::load($fid[0])->getFileUri();
-        $path = file_create_url($file);
-      }
+    $slider_content = array();
 
-    } else {
-      $path = base_path() . drupal_get_path('theme', 'robotic') . theme_get_setting('slide_image_path_' . $i, 'robotic');
-    } //end if
-    
-    //BG imgage 
-    /*$fidbg = theme_get_setting('slide_bg_path_' . $i, 'robotic');
-    $noslideimg = ' no-image';
-    if (!empty($fidbg)) {
-      //$filebg = file_load($fidbg[0]);
-      //$uribg = $filebg->getFileUri();
-      if (!empty(\Drupal\file\Entity\File::load($fidbg[0]))) {
+    for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
+        $fid         = theme_get_setting('slide_image_path' . $i, 'robotic');
+        $activeSlide = '';
+        if ($i == 1) {
+            $activeSlide = 'active';
+        }
+
+        if (!empty($fid)) {
+            //$file = file_load($fid[0]);
+            //$uri = $file->getFileUri();
+            if (!empty(\Drupal\file\Entity\File::load($fid[0]))) {
+                $file = \Drupal\file\Entity\File::load($fid[0])->getFileUri();
+                $path = file_create_url($file);
+            }
+        } else {
+            $path = base_path() . drupal_get_path('theme', 'robotic') . theme_get_setting('slide_image_path_' . $i, 'robotic');
+        } //end if
+
+        //BG imgage
+        /*$fidbg = theme_get_setting('slide_bg_path_' . $i, 'robotic');
+        $noslideimg = ' no-image';
+        if (!empty($fidbg)) {
+        //$filebg = file_load($fidbg[0]);
+        //$uribg = $filebg->getFileUri();
+        if (!empty(\Drupal\file\Entity\File::load($fidbg[0]))) {
         $filebg = \Drupal\file\Entity\File::load($fidbg[0])->getFileUri();
         $pathbg = file_create_url($filebg);
         $bgimg = '<img class="slider-bg-img" src="' . $pathbg . '" alt="image01" />';
 
-      }
-      $noslideimg ='';
-    } else {
-      $pathbg = base_path() . drupal_get_path('theme', 'robotic') . '/images/slider/slide-'. $i .'-bg.png';
-      $bgimg = '<img class="slider-bg-img" src="' . $pathbg . '" alt="image01" />';
-      
-    } //end if*/
-    
-    $slider_content[$i] = '<div class="item ' . $activeSlide . '" data-id="' . $i . '" style="background:'. theme_get_setting('slide_color_' . $i, 'robotic') .'"> 
-      
+        }
+        $noslideimg ='';
+        } else {
+        $pathbg = base_path() . drupal_get_path('theme', 'robotic') . '/images/slider/slide-'. $i .'-bg.png';
+        $bgimg = '<img class="slider-bg-img" src="' . $pathbg . '" alt="image01" />';
+
+        } //end if*/
+
+        $slider_content[$i] = '<div class="item ' . $activeSlide . '" data-id="' . $i . '" style="background:' . theme_get_setting('slide_color_' . $i, 'robotic') . '">
+
       <div class="carousel-caption">
         <div class="container"><div class="col-md-6 text-left">
         <h3 class="title animated zoomIn">' . wordwrap(theme_get_setting('slide_title_' . $i, 'robotic'), 20, "<br>") . '</h3>
@@ -389,35 +368,34 @@ function robotic_get_slider_content()
         </div></div>
       </div>
     </div>';
-  }
-  return $slider_content;
+    }
+    return $slider_content;
 }
-
 
 // slider indicator callback
 function robotic_get_slider_indicator()
 {
-  $slider_indicator = array();
-  for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
-    $active = '';
-    if ($i == 1) {
-      $active = 'active';
+    $slider_indicator = array();
+    for ($i = 1; $i <= theme_get_setting('slide_number', 'robotic'); $i++) {
+        $active = '';
+        if ($i == 1) {
+            $active = 'active';
+        }
+
+        $slider_indicator[$i] = '<li data-target="#roboticCarousel" data-slide-to="' . $i . '" class="' . $active . '"></li>';
     }
-    
-    $slider_indicator[$i] = '<li data-target="#roboticCarousel" data-slide-to="' . $i . '" class="' . $active . '"></li>';
-  }
-  return $slider_indicator;
+    return $slider_indicator;
 }
 
 // social links callback
 function robotic_get_social_links()
 {
-  $slcontent = '<div class="social-section"><div class="social-links"><ul>';
-  for ($i = 1; $i <= SOCIAL_ICON_COUNT; $i++) {
-    if (!empty(theme_get_setting("social_class_{$i}"))) {
-      $slcontent .= '<li><a href="' . theme_get_setting("social_links_{$i}") . '" target="_blank"><i class="fa ' . theme_get_setting("social_class_{$i}") . '"></i></a></li>';
+    $slcontent = '<div class="social-section"><div class="social-links"><ul>';
+    for ($i = 1; $i <= SOCIAL_ICON_COUNT; $i++) {
+        if (!empty(theme_get_setting("social_class_{$i}"))) {
+            $slcontent .= '<li><a href="' . theme_get_setting("social_links_{$i}") . '" target="_blank"><i class="fa ' . theme_get_setting("social_class_{$i}") . '"></i></a></li>';
+        }
     }
-  }
-  $slcontent .= '</ul></div></div>';
-  return $slcontent;
+    $slcontent .= '</ul></div></div>';
+    return $slcontent;
 }
