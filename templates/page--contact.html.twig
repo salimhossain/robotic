@@ -57,7 +57,12 @@
  */
 #}
 
+
+
+{% if robotic_general.is_map %}
 {{ attach_library('robotic/map') }}
+{% endif %}
+
 {% set container = theme.settings.fluid_container ? 'container-fluid' : 'container' %}
 {# theme.settings.navbar_position ? 'navbar-' ~ theme.settings.navbar_position|clean_class : container, #}
 {# Navbar #}
@@ -100,7 +105,11 @@
 {# dump(_context|keys) #}
 {# dump(theme) #}
 
-<div id="map-container" class="map-container"><div id="map" style="width: 100%; height: 320px;">&nbsp;</div></div>
+{% if robotic_general.is_map %}
+  <div id="map-container" class="map-container"><div id="map" style="width: 100%; height: 320px;">&nbsp;</div></div>
+{% else %}
+  <div class="main-container"></div>
+{% endif %}
 
 {# Main #}
 {% block main %}

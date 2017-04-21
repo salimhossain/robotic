@@ -46,6 +46,7 @@ show_credit_link: 1
 is_slideshow: 1
 slide_number: 3
 socialicon: 1
+is_map: 1
 
 body_bg: '#FFFFFF'
 color_bg: '#f2f2f2'

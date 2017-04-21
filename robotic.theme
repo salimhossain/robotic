@@ -47,7 +47,7 @@ function robotic_preprocess_html(&$variables)
 
 function robotic_system_powered_by()
 {
-    return '<span>' . t('SALIM Powered by <a href="@poweredby">Drupal</a>', array('@poweredby' => 'https://www.drupal.org')) . '</span>';
+    return '<span>' . t('Powered by <a href="@poweredby">Drupal</a>', array('@poweredby' => 'https://www.drupal.org')) . '</span>';
 }
 
 define('SOCIAL_ICON_COUNT', 8);
@@ -68,6 +68,10 @@ function robotic_preprocess_page(&$variables)
     $variables['robotic_colors']['body_bg']     = theme_get_setting('body_bg', 'robotic');
     $variables['robotic_colors']['header_bg']   = theme_get_setting('color_bg', 'robotic');
     $variables['robotic_colors']['header_font'] = theme_get_setting('color_font', 'robotic');
+    /*if ($variables['robotic_general']['is_map'] == 1) {
+        
+    }*/
+    $variables['robotic_general']['is_map'] = theme_get_setting('is_map', 'robotic');
 
     // Robotic Class
     /*if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
@@ -118,17 +122,24 @@ function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\Form
         '#group' => 'robotic',
     );
 
-    //Google Map API settings start
+    //Contact Page Google Map API settings start
     $form['robotic_general']['gmapapi'] = array(
         '#type'        => 'fieldset',
-        '#title'       => t('Google Map API'),
+        '#title'       => t('Contact Page | Google Map'),
         /*'#group' => 'robotic',*/
         '#collapsible' => true,
         '#collapsed'   => false,
     );
+    $form['robotic_general']['gmapapi']['is_map'] = array(
+        '#type'          => 'checkbox',
+        '#title'         => t('Show Google Map in Contact Page'),
+        '#default_value' => theme_get_setting('is_map', 'robotic'),
+        '#description'   => t("Check this option to show Google Map in contact page. Uncheck to hide."),
+    );
+
     $form['robotic_general']['gmapapi']['gmapapi_key'] = array(
         '#type'          => 'textfield',
-        '#title'         => t('Google map key'),
+        '#title'         => t('Google Map API Key'),
         '#default_value' => theme_get_setting('gmapapi_key', 'robotic'),
         '#description'   => t("Put your google map api key here."),
     );
