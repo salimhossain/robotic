@@ -40,6 +40,9 @@
       $('#roboticCarousel').carousel($(this).data('slide-to')-1); 
     });
 
+    // Sticky header top dynamic padding.
+    var headerHight = jQuery( "#navbar" ).height();
+    jQuery("header#navbar + div").css("margin-top", headerHight + "px");
 
 
     }
