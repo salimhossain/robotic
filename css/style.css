@@ -680,9 +680,12 @@ span.glyphicon.glyphicon-heart{
   right: 0%;
   left: 0%;
 }
+header#navbar + div,
+#roboticCarousel{
+  margin-top: 86px;
+}
 #roboticCarousel{
   min-height: 400px;
-  margin-top: 86px;
   background: #000;
 }
 .carousel-indicators .active{

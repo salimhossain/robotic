@@ -75,9 +75,9 @@ function robotic_preprocess_page(&$variables)
 
     // Robotic Class
     /*if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
-$content_class = 'col-md-6';
-$sidebar_class = 'col-md-3';
-}*/
+        $content_class = 'col-md-6';
+        $sidebar_class = 'col-md-3';
+    }*/
 }
 
 function robotic_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
@@ -88,8 +88,6 @@ function robotic_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_s
         $form['actions']['submit']['#value']                 = html_entity_decode('&#xf002;');
         $form['actions']['submit']['#attributes']['class'][] = 'search-button fa';
 
-        //echo '<pre>';
-        //print_r($form); echo '</pre>';
     }
 }
 
@@ -222,7 +220,6 @@ function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\Form
             '#default_value' => theme_get_setting('slide_url_' . $i, 'robotic'),
         );
 
-///sasfasfas
         $form['robotic_slideshow']['slide' . $i]['slide_color_' . $i] = array(
             '#type'          => 'color',
             '#title'         => t('Slide ' . $i . ' Background Color'),
@@ -285,8 +282,10 @@ function robotic_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\Form
 
     $form['help']['info'] = array(
         '#type'        => 'fieldset',
-        '#title'       => t('How may i help you?'),
-        '#description' => t('If i can be of assistance, please do not hesitate to <a href="mailto:salimhossain@gmail.com?Subject=General%20inquiry" target="_top">contact.</a> '),
+        '#title'       => t('Thanks for using Robotic Theme!'),
+        '#description' => t('<h6>Free Support for Questions and Issues, Please Do Not Hesitate to <a href="mailto:salimhossain@gmail.com?Subject=General%20inquiry" target="_top">Contact.</a> </h6><hr>
+            <h6>Customization Service Available, Please Do Not Hesitate to <a href="mailto:salimhossain@gmail.com?Subject=Customization%20Service" target="_top">Contact.</a> </h6>
+            '),
     );
 
     // Custom submit to save the file permenant.
@@ -312,14 +311,14 @@ function robotic_settings_form_submit(&$form, \Drupal\Core\Form\FormStateInterfa
         }
         //for gb image
         /*if (isset($values['slide_bg_path_' . $i]) && !empty($values['slide_bg_path_' . $i])) {
-    // Load the file via file.fid.
-    $file = file_load($values['slide_bg_path_' . $i][0]);
-    // Change status to permanent.
-    $file->setPermanent();
-    $file->save();
-    $file_usage = \Drupal::service('file.usage');
-    $file_usage->add($file, 'user', 'user', $account->id());
-    }*/
+        // Load the file via file.fid.
+        $file = file_load($values['slide_bg_path_' . $i][0]);
+        // Change status to permanent.
+        $file->setPermanent();
+        $file->save();
+        $file_usage = \Drupal::service('file.usage');
+        $file_usage->add($file, 'user', 'user', $account->id());
+        }*/
     }
 }
 
